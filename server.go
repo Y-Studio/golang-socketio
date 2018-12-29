@@ -260,6 +260,11 @@ func onConnectStore(c *Channel) {
 On disconnection system handler, clean joins and sid
 */
 func onDisconnectCleanup(c *Channel) {
+	_onDisconnectCleanupChannel(c)
+	_onDisconnectCleanupSid(c)
+}
+
+func _onDisconnectCleanupChannel(c *Channel){
 	c.server.channelsLock.Lock()
 	defer c.server.channelsLock.Unlock()
 
@@ -277,7 +282,9 @@ func onDisconnectCleanup(c *Channel) {
 
 		delete(c.server.rooms, c)
 	}
+}
 
+func _onDisconnectCleanupSid(c *Channel){
 	c.server.sidsLock.Lock()
 	defer c.server.sidsLock.Unlock()
 
