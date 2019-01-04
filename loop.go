@@ -81,6 +81,14 @@ func (c *Channel) IsAlive() bool {
 }
 
 /**
+Checks that Channel is still alive
+*/
+func (c *Channel) IsAliveNoLock() bool {
+	return c.alive
+}
+
+
+/**
 Close channel
 */
 func closeChannel(c *Channel, m *methods, args ...interface{}) error {
