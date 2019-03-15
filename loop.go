@@ -103,9 +103,9 @@ func closeChannel(c *Channel, m *methods, args ...interface{}) error {
 
 	m.callLoopEvent(c, OnDisconnection)
 
-	overfloodedLock.Lock()
-	delete(overflooded, c)
-	overfloodedLock.Unlock()
+	//overfloodedLock.Lock()
+	//delete(overflooded, c)
+	//overfloodedLock.Unlock()
 
 	return nil
 }
@@ -158,13 +158,13 @@ func outLoop(c *Channel, m *methods) error {
 		if outBufferLen >= queueBufferSize-1 {
 			return closeChannel(c, m, ErrorSocketOverflood)
 		} else if outBufferLen > int(queueBufferSize/2) {
-			overfloodedLock.Lock()
-			overflooded[c] = struct{}{}
-			overfloodedLock.Unlock()
+			//overfloodedLock.Lock()
+			//overflooded[c] = struct{}{}
+			//overfloodedLock.Unlock()
 		} else {
-			overfloodedLock.Lock()
-			delete(overflooded, c)
-			overfloodedLock.Unlock()
+			//overfloodedLock.Lock()
+			//delete(overflooded, c)
+			//overfloodedLock.Unlock()
 		}
 
 		msg := <-c.out
