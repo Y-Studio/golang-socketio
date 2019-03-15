@@ -213,7 +213,7 @@ func (s *Server) BroadcastTo(room, method string, args interface{}) {
 	}
 
 	for cn := range roomChannels {
-		if cn.IsAlive() {
+		if cn.IsAliveNoLock() {
 			go cn.Emit(method, args)
 		}
 	}
@@ -227,7 +227,7 @@ func (s *Server) BroadcastToAll(method string, args interface{}) {
 	defer s.sidsLock.RUnlock()
 
 	for _, cn := range s.sids {
-		if cn.IsAlive() {
+		if cn.IsAliveNoLock() {
 			go cn.Emit(method, args)
 		}
 	}
